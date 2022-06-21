@@ -7,11 +7,11 @@
     <div class="panel-heading pt-0 pb-0">
         <ul class="row m-0 list-inline">
             <li class="col-xs-6 col-sm-4 p-0 text-left">
-                <img src="{{ asset('public/assets/img/icons/logo.jpg') }}" width="210" height="50">
-            </li>  
+                <img src="{{ asset('assets/img/icons/logo.jpg') }}" width="210" height="50">
+            </li>
             <li class="col-xs-4 col-sm-4 hidden-xs" id="screen-title">
                 <h3 class="mt-1 pt-1">{{ trans('app.auto_token') }}</h3>
-            </li>         
+            </li>
             <li class="col-xs-6 col-sm-4 p-1 text-right">
                 <div class="mt-1 pt-1">
                     <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#infoModal">
@@ -20,29 +20,29 @@
                     @if ($display->keyboard_mode)
                     <div class="disabled btn btn-success btn-sm" title="Keyboard Mode Enable">
                         <i class="fa fa-keyboard-o"></i>&nbsp;&nbsp;<i class="fa fa-check"></i>
-                    </div> 
+                    </div>
                     @else
                     <div class="disabled btn btn-danger btn-sm" title="Keyboard Mode Disabled">
                         <i class="fa fa-keyboard-o"></i>&nbsp;&nbsp;<i class="fa fa-times"></i>
-                    </div> 
+                    </div>
                     @endif
                     <button id="toggleScreen" class="btn btn-sm btn-primary"><i class="fa fa-arrows-alt"></i></button>
-                </div> 
-            </li> 
+                </div>
+            </li>
         </ul>
-    </div>   
+    </div>
 
     <div class="panel-body">
         <div class="col-sm-12" id="screen-content">
             @if($display->sms_alert || $display->show_note)
                 <!-- With Mobile No -->
-                @foreach ($departmentList as $department) 
+                @foreach ($departmentList as $department)
                 <div class="p-1 m-1 btn btn-primary capitalize text-center">
-                    <button 
-                        type="button" 
+                    <button
+                        type="button"
                         class="p-1 m-1 btn btn-primary capitalize text-center"
-                        style="min-width: 15vw;white-space: pre-wrap;box-shadow:0px 0px 0px 2px#<?= substr(dechex(crc32($department->name)), 0, 6); ?>" 
-                        data-toggle="modal" 
+                        style="min-width: 15vw;white-space: pre-wrap;box-shadow:0px 0px 0px 2px#<?= substr(dechex(crc32($department->name)), 0, 6); ?>"
+                        data-toggle="modal"
                         data-target="#tokenModal"
                         data-department-id="{{ $department->department_id }}"
                         data-counter-id="{{ $department->counter_id }}"
@@ -50,32 +50,32 @@
                         >
                             <h5>{{ $department->name }}</h5>
                             <h6>{{ $department->officer }}</h6>
-                    </button>  
+                    </button>
                 </div>
-                @endforeach  
+                @endforeach
                 <!--Ends of With Mobile No -->
             @else
                 <!-- Without Mobile No -->
                 @foreach ($departmentList as $department )
-                  {{ Form::open(['url' => 'receptionist/token/auto', 'class' => 'AutoFrm p-1 m-1 btn btn-primary capitalize text-center']) }} 
+                  {{ Form::open(['url' => 'receptionist/token/auto', 'class' => 'AutoFrm p-1 m-1 btn btn-primary capitalize text-center']) }}
                   <input type="hidden" name="department_id" value="{{ $department->department_id }}">
                   <input type="hidden" name="counter_id" value="{{ $department->counter_id }}">
                   <input type="hidden" name="user_id" value="{{ $department->user_id }}">
-                  <button 
-                    type="submit" 
+                  <button
+                    type="submit"
                     class="p-1 m-1 btn btn-primary capitalize text-center"
-                    style="min-width: 15vw;white-space: pre-wrap;box-shadow:0px 0px 0px 2px#<?= substr(dechex(crc32($department->name)), 0, 6); ?>" 
+                    style="min-width: 15vw;white-space: pre-wrap;box-shadow:0px 0px 0px 2px#<?= substr(dechex(crc32($department->name)), 0, 6); ?>"
                     >
                         <h5>{{ $department->name }}</h5>
                         <h6>{{ $department->officer }}</h6>
-                </button> 
+                </button>
                   {{ Form::close() }}
-                @endforeach 
+                @endforeach
                 <!--Ends of Without Mobile No -->
             @endif
-        </div>  
-    </div> 
-</div>  
+        </div>
+    </div>
+</div>
 
 <!-- Modal -->
 <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel">
@@ -90,13 +90,13 @@
             <strong>SMS Alert: {!! (!empty($display->sms_alert)?("<span class='label label-success'>Active</span>"):("<span class='label label-warning'>Deactive</span>")) !!} </strong><br>
                         To active or deactive SMS Alert, please change the status of SMS Alert in Setting->Display Settings page
         </p>
-        <p><strong class="label label-warning"> Note 2 </strong> &nbsp; To display a department on the auto token setting page, you need to set up it in Auto Token Setting page. 
+        <p><strong class="label label-warning"> Note 2 </strong> &nbsp; To display a department on the auto token setting page, you need to set up it in Auto Token Setting page.
         </p>
-        <p><strong class="label label-warning"> Note 3 </strong> &nbsp; 
-            You can create a token by click on a key of the keyboard. 
-            Enable <span class='label label-success'>Keyboard Mode</span> from the display setting page. 
-            To create a token for a department, press on the key which you have denoted in the <strong>key for keyboard mode</strong> field in the add department page. 
-            The <strong>key for keyboard mode</strong> filed is also used to manage the token serial. 
+        <p><strong class="label label-warning"> Note 3 </strong> &nbsp;
+            You can create a token by click on a key of the keyboard.
+            Enable <span class='label label-success'>Keyboard Mode</span> from the display setting page.
+            To create a token for a department, press on the key which you have denoted in the <strong>key for keyboard mode</strong> field in the add department page.
+            The <strong>key for keyboard mode</strong> filed is also used to manage the token serial.
         </p>
       </div>
       <div class="modal-footer">
@@ -104,12 +104,12 @@
       </div>
     </div>
   </div>
-</div> 
+</div>
 
 <div class="modal fade" tabindex="-1" id="tokenModal" role="dialog" style="z-index:100000">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      {{ Form::open(['url' => 'receptionist/token/auto', 'class' => 'AutoFrm']) }} 
+      {{ Form::open(['url' => 'receptionist/token/auto', 'class' => 'AutoFrm']) }}
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title">{{ trans('app.user_information') }}</h4>
@@ -170,8 +170,8 @@ $(document).ready(function(){
             {
                 mobileErrorMessage = "The Mobile No. field is required!";
                 valid = false;
-            } 
-            else if(!$.isNumeric(mobile)) 
+            }
+            else if(!$.isNumeric(mobile))
             {
                 mobileErrorMessage = "The Mobile No. is incorrect!";
                 valid = false;
@@ -180,13 +180,13 @@ $(document).ready(function(){
             {
                 mobileErrorMessage = "The Mobile No. must be between 7-15 digits";
                 valid = false;
-            } 
+            }
             else
-            { 
+            {
                 mobileErrorMessage = "";
                 valid = true;
-            }   
-        }   
+            }
+        }
 
         if ($('textarea[name=note]').length)
         {
@@ -211,24 +211,24 @@ $(document).ready(function(){
         if(!valid && mobileErrorMessage.length > 0)
         {
             $('.modal button[type=submit]').addClass('hidden');
-        } 
+        }
         else if(!valid && noteErrorMessage.length > 0)
         {
             $('.modal button[type=submit]').addClass('hidden');
-        } 
+        }
         else
         {
             $(this).next().html(" ");
             $('.modal button[type=submit]').removeClass('hidden');
         }
         $('textarea[name=note]').next().html(noteErrorMessage);
-        $('input[name=client_mobile]').next().html(mobileErrorMessage);  
+        $('input[name=client_mobile]').next().html(mobileErrorMessage);
 
     });
 
     var frm = $(".AutoFrm");
     frm.on('submit', function(e){
-        e.preventDefault(); 
+        e.preventDefault();
         $(".modal").modal('hide');
         var formData = new FormData($(this)[0]);
         ajax_request(formData);
@@ -266,9 +266,9 @@ $(document).ready(function(){
                     content += "<li><strong>{{ trans('app.officer') }} </strong>"+data.token.firstname+' '+data.token.lastname+"</li>";
                     content += "<li><strong>{{ trans('app.date') }} </strong>"+data.token.created_at+"</li>";
                     content += "</ul>";
-                    content += "</div>"; 
-                    
-                    // print 
+                    content += "</div>";
+
+                    // print
                     printThis(content);
 
                     $("input[name=client_mobile]").val("");
@@ -308,17 +308,17 @@ $(document).ready(function(){
             $("body .panel").addClass('m-0');
             $("body .panel-heading h3").text($('.cm-navbar>.cm-flex').text());
 
-            $("body #toggleScreenArea #screen-note").hide(); 
+            $("body #toggleScreenArea #screen-note").hide();
             $("body #toggleScreenArea #screen-content").attr({'style': 'width:100%;text-align:center'});
             $("body #toggleScreen").html('<i class="fa fa-arrows"></i>');
         }
     });
- 
 
-    $('body').on("keydown", function (e) { 
+
+    $('body').on("keydown", function (e) {
         var key = e.key;
-        var code = e.keyCode; 
-  
+        var code = e.keyCode;
+
         if ($('.modal.in').length == 0 && '{{$display->keyboard_mode}}'==1 && ((code >= 48 && code <=57) ||  (code >= 96 && code <=105) || (code >= 65 && code <=90)))
         {
             var keyList = '<?= $keyList; ?>';
@@ -349,5 +349,4 @@ $(document).ready(function(){
 });
 </script>
 @endpush
- 
- 
+

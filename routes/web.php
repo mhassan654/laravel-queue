@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 # login
 Route::get('/', 'Common\LoginController@login');
 Route::get('login', 'Common\LoginController@login')->name('login');
-Route::post('login', 'Common\LoginController@checkLogin');
+Route::post('login', 'Common\LoginController@checkLogin')->name('login.post');
 Route::get('logout', 'Common\LoginController@logout')->name('logout');
 # login - {provider: google}
 Route::get('login/{provider}', 'Common\LoginController@redirectToProvider');
@@ -40,44 +40,44 @@ Route::get('clean', function () {
 
 
 # -----------------------------------------------------------
-# COMMON 
+# COMMON
 # -----------------------------------------------------------
 Route::prefix('common')
     ->namespace('Common')
-    ->group(function() { 
+    ->group(function() {
 	# switch language
 	Route::get('language/{locale?}', 'LanguageController@index');
 
 	# cron job
 	Route::get('jobs/sms', 'CronjobController@sms');
 
-	# display 
-	Route::get('display','DisplayController@display');  
-	Route::post('display1', 'DisplayController@display1');  
-	Route::post('display2','DisplayController@display2');  
-	Route::post('display3','DisplayController@display3'); 
-	Route::post('display4','DisplayController@display4'); 
-	Route::post('display5','DisplayController@display5'); 
+	# display
+	Route::get('display','DisplayController@display');
+	Route::post('display1', 'DisplayController@display1');
+	Route::post('display2','DisplayController@display2');
+	Route::post('display3','DisplayController@display3');
+	Route::post('display4','DisplayController@display4');
+	Route::post('display5','DisplayController@display5');
 
 	# -----------------------------------------------------------
-	# AUTHORIZED COMMON 
+	# AUTHORIZED COMMON
 	# -----------------------------------------------------------
 	Route::middleware('auth')
-	    ->group(function() { 
+	    ->group(function() {
 		#message notification
-		Route::get('message/notify','NotificationController@message'); 
-		# message  
-		Route::get('message','MessageController@show'); 
-		Route::post('message','MessageController@send'); 
-		Route::get('message/inbox','MessageController@inbox'); 
-		Route::post('message/inbox/data','MessageController@inboxData'); 
-		Route::get('message/sent','MessageController@sent'); 
-		Route::post('message/sent/data','MessageController@sentData'); 
-		Route::get('message/details/{id}/{type}','MessageController@details'); 
-		Route::get('message/delete/{id}/{type}','MessageController@delete');  
-		Route::post('message/attachment','MessageController@UploadFiles'); 
+		Route::get('message/notify','NotificationController@message');
+		# message
+		Route::get('message','MessageController@show');
+		Route::post('message','MessageController@send');
+		Route::get('message/inbox','MessageController@inbox');
+		Route::post('message/inbox/data','MessageController@inboxData');
+		Route::get('message/sent','MessageController@sent');
+		Route::post('message/sent/data','MessageController@sentData');
+		Route::get('message/details/{id}/{type}','MessageController@details');
+		Route::get('message/delete/{id}/{type}','MessageController@delete');
+		Route::post('message/attachment','MessageController@UploadFiles');
 
-		# profile 
+		# profile
 		Route::get('setting/profile','ProfileController@profile');
 		Route::get('setting/profile/edit','ProfileController@profileEditShowForm');
 		Route::post('setting/profile/edit','ProfileController@updateProfile');
@@ -87,7 +87,7 @@ Route::prefix('common')
 # -----------------------------------------------------------
 # AUTHORIZED
 # -----------------------------------------------------------
-Route::group(['middleware' => ['auth']], function() { 
+Route::group(['middleware' => ['auth']], function() {
 
 	# -----------------------------------------------------------
 	# ADMIN
@@ -95,11 +95,11 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::prefix('admin')
 	    ->namespace('Admin')
 	    ->middleware('roles:admin')
-	    ->group(function() { 
+	    ->group(function() {
 		# home
 		Route::get('/', 'HomeController@home');
 
-		# user 
+		# user
 		Route::get('user', 'UserController@index');
 		Route::post('user/data', 'UserController@userData');
 		Route::get('user/create', 'UserController@showForm');
@@ -135,15 +135,15 @@ Route::group(['middleware' => ['auth']], function() {
 		Route::post('sms/setting', 'SmsSettingController@updateSetting');
 
 		# token
-		Route::get('token/setting','TokenController@tokenSettingView'); 
-		Route::post('token/setting','TokenController@tokenSetting'); 
+		Route::get('token/setting','TokenController@tokenSettingView');
+		Route::post('token/setting','TokenController@tokenSetting');
 		Route::get('token/setting/delete/{id}','TokenController@tokenDeleteSetting');
-		Route::get('token/auto','TokenController@tokenAutoView'); 
-		Route::post('token/auto','TokenController@tokenAuto'); 
+		Route::get('token/auto','TokenController@tokenAutoView');
+		Route::post('token/auto','TokenController@tokenAuto');
 		Route::get('token/current','TokenController@current');
-		Route::get('token/report','TokenController@report');  
-		Route::post('token/report/data','TokenController@reportData');  
-		Route::get('token/performance','TokenController@performance');  
+		Route::get('token/report','TokenController@report');
+		Route::post('token/report/data','TokenController@reportData');
+		Route::get('token/performance','TokenController@performance');
 		Route::get('token/create','TokenController@showForm');
 		Route::post('token/create','TokenController@create');
 		Route::post('token/print', 'TokenController@viewSingleToken');
@@ -151,15 +151,15 @@ Route::group(['middleware' => ['auth']], function() {
 		Route::get('token/stoped/{id}','TokenController@stoped');
 		Route::get('token/recall/{id}','TokenController@recall');
 		Route::get('token/delete/{id}','TokenController@delete');
-		Route::post('token/transfer','TokenController@transfer'); 
+		Route::post('token/transfer','TokenController@transfer');
 
 		# setting
-		Route::get('setting','SettingController@showForm'); 
-		Route::post('setting','SettingController@create');  
-		Route::get('setting/display','DisplayController@showForm');  
-		Route::post('setting/display','DisplayController@setting');  
-		Route::get('setting/display/custom','DisplayController@getCustom');  
-		Route::post('setting/display/custom','DisplayController@custom');  
+		Route::get('setting','SettingController@showForm');
+		Route::post('setting','SettingController@create');
+		Route::get('setting/display','DisplayController@showForm');
+		Route::post('setting/display','DisplayController@setting');
+		Route::get('setting/display/custom','DisplayController@getCustom');
+		Route::post('setting/display/custom','DisplayController@custom');
 	});
 
 	# -----------------------------------------------------------
@@ -168,7 +168,7 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::prefix('officer')
 	    ->namespace('Officer')
 	    ->middleware('roles:officer')
-	    ->group(function() { 
+	    ->group(function() {
 		# home
 		Route::get('/', 'HomeController@home');
 		# user
@@ -176,7 +176,7 @@ Route::group(['middleware' => ['auth']], function() {
 
 		# token
 		Route::get('token','TokenController@index');
-		Route::post('token/data','TokenController@tokenData');  
+		Route::post('token/data','TokenController@tokenData');
 		Route::get('token/current','TokenController@current');
 		Route::get('token/complete/{id}','TokenController@complete');
 		Route::get('token/recall/{id}','TokenController@recall');
@@ -190,16 +190,16 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::prefix('receptionist')
 	    ->namespace('Receptionist')
 	    ->middleware('roles:receptionist')
-	    ->group(function() { 
+	    ->group(function() {
 		# home
-		Route::get('/','TokenController@tokenAutoView'); 
+		Route::get('/','TokenController@tokenAutoView');
 
 		# token
-		Route::get('token/auto','TokenController@tokenAutoView'); 
-		Route::post('token/auto','TokenController@tokenAuto'); 
+		Route::get('token/auto','TokenController@tokenAutoView');
+		Route::post('token/auto','TokenController@tokenAuto');
 		Route::get('token/create','TokenController@showForm');
 		Route::post('token/create','TokenController@create');
-		Route::get('token/current','TokenController@current'); 
+		Route::get('token/current','TokenController@current');
 		Route::post('token/print', 'TokenController@viewSingleToken');
 	});
 
@@ -209,7 +209,7 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::prefix('client')
 	    ->namespace('Client')
 	    ->middleware('roles:client')
-	    ->group(function() { 
+	    ->group(function() {
 		# home
 		Route::get('/', function(){
 			echo "<pre>";
@@ -217,6 +217,6 @@ Route::group(['middleware' => ['auth']], function() {
 			echo "<br/>";
 			print_r(auth()->user());
 			return "Hello Client!";
-		}); 
+		});
 	});
 });

@@ -120,9 +120,9 @@ INSERT INTO `message` (`id`, `sender_id`, `receiver_id`, `subject`, `message`, `
   (8, 4, 1, 'sx', 'exf', NULL, '2018-07-29 05:54:00', 0, 1),
   (9, 1, 6, 'AAA1', 'TAFD', NULL, '2020-07-09 22:25:00', 0, 0),
   (10, 2, 7, 'AAA1', 'TSFD', NULL, '2020-07-09 10:32:46', 0, 0),
-  (11, 1, 5, 'dd', 'TEST', 'public/assets/attachments/69865.jpg', '2020-07-11 10:38:44', 0, 1),
-  (12, 1, 7, 'ef', 'Test', 'public/assets/attachments/43195.jpg', '2020-07-13 00:11:47', 0, 0),
-  (13, 1, 8, 'Test Subject', 'cy: No \'Access-Control-Allow-Origin\' head', 'public/assets/attachments/33884.jpg', '2020-07-13 15:23:44', 0, 1);
+  (11, 1, 5, 'dd', 'TEST', '/attachments/69865.jpg', '2020-07-11 10:38:44', 0, 1),
+  (12, 1, 7, 'ef', 'Test', '/attachments/43195.jpg', '2020-07-13 00:11:47', 0, 0),
+  (13, 1, 8, 'Test Subject', 'cy: No \'Access-Control-Allow-Origin\' head', '/attachments/33884.jpg', '2020-07-13 15:23:44', 0, 1);
 /*!40000 ALTER TABLE `message` ENABLE KEYS */;
 
 -- Dumping structure for table db_queue_pda.setting
@@ -147,7 +147,7 @@ CREATE TABLE IF NOT EXISTS `setting` (
 DELETE FROM `setting`;
 /*!40000 ALTER TABLE `setting` DISABLE KEYS */;
 INSERT INTO `setting` (`id`, `title`, `description`, `logo`, `favicon`, `email`, `phone`, `address`, `copyright_text`, `direction`, `language`, `timezone`) VALUES
-  (1, 'Token - Queue Management System', 'Queue', 'public/assets/img/icons/logo.jpg', 'public/assets/img/icons/favicon.jpg', 'admin@example.com', '+325 252 222', 'Demo street, NY-10000', 'copyright@2020', NULL, 'en', 'Asia/Dhaka');
+  (1, 'Token - Queue Management System', 'Queue', '/img/icons/logo.jpg', '/img/icons/favicon.jpg', 'admin@example.com', '+325 252 222', 'Demo street, NY-10000', 'copyright@2020', NULL, 'en', 'Asia/Dhaka');
 /*!40000 ALTER TABLE `setting` ENABLE KEYS */;
 
 -- Dumping structure for table db_queue_pda.sms_history
@@ -241,7 +241,7 @@ CREATE TABLE IF NOT EXISTS `token` (
 DELETE FROM `token`;
 /*!40000 ALTER TABLE `token` DISABLE KEYS */;
 
-INSERT INTO `token` (`id`, `token_no`, `client_mobile`, `department_id`, `counter_id`, `user_id`, `note`, `created_by`, `created_at`, `updated_at`, `is_vip`, `status`, `sms_status`) VALUES  
+INSERT INTO `token` (`id`, `token_no`, `client_mobile`, `department_id`, `counter_id`, `user_id`, `note`, `created_by`, `created_at`, `updated_at`, `is_vip`, `status`, `sms_status`) VALUES
 (1, 'A101', '0123456789', 1, 1, 2, NULL, 2, DATE_ADD(NOW(), INTERVAL -7 DAY), NOW(), NULL, 1, 1),
 (2, 'A201', '0123456789', 1, 2, 2, NULL, 2, DATE_ADD(NOW(), INTERVAL -7 DAY), NOW(), NULL, 1, 1),
 (3, 'A202', '0123456789', 1, 2, 4, NULL, NULL, DATE_ADD(NOW(), INTERVAL -7 DAY), NOW(), NULL, 1, 1),
@@ -262,7 +262,7 @@ INSERT INTO `token` (`id`, `token_no`, `client_mobile`, `department_id`, `counte
 (18, 'B401', '0123456789', 2, 4, 5, NULL, 4, DATE_ADD(NOW(), INTERVAL -2 DAY), NULL, NULL, 0, 0),
 (19, 'O601', '0123456789', 4, 6, 8, NULL, 5, DATE_ADD(NOW(), INTERVAL -2 DAY), NOW(), NULL, 1, 0),
 (20, 'O602', '0123456789', 4, 6, 2, NULL, NULL, DATE_ADD(NOW(), INTERVAL -1 DAY), NULL, NULL, 0, 0),
-(22, 'A101', '0123456789', 1, 1, 2, NULL, 3, NOW(), NULL, NULL, 2, 0), 
+(22, 'A101', '0123456789', 1, 1, 2, NULL, 3, NOW(), NULL, NULL, 2, 0),
 (23, 'VA201', '0123456789', 1, 2, 4, NULL, 2, NOW(), NULL, 1, 1, 0),
 (24, 'A202', '0123456789', 1, 2, 2, NULL, 1, NOW(), NULL, NULL, 0, 0),
 (25, 'A301', '0123456789', 1, 3, 4, NULL, 2, NOW(), NULL, NULL, 1, 0),
@@ -334,7 +334,7 @@ INSERT INTO `user` (`id`, `firstname`, `lastname`, `email`, `password`, `departm
   (8, 'Danniyel', 'Dan', 'dan@codekernel.net', '$2y$10$l09QqbcYQ3BXiiScfHlMHuhXJKbLm8GyZObj7SWJ6a3fSK7jwvp0O', 6, '0123456789', NULL, 1, NULL, '2020-05-15 00:00:00', NULL, 1),
   (9, 'Jennifer', 'Doe', 'jennifer@codekernel.net', '$2y$10$ztTEJRFdS42R9JueIEAgnumeH1Da99iWHGA5ove6zGjOxfDsTEEOe', 6, '0123456789', NULL, 1, NULL, '2020-05-15 00:00:00', NULL, 1),
   (10, 'Tylor', 'Ronnie', 'tylor@codekernel.net', '$2y$10$8f6GXVBrCDILL6SZcQs2aOuOrnCHweU1aPQ61Tz27tvqqv9htFOo.', 7, '0123456789', NULL, 1, NULL, '2020-05-15 00:00:00', NULL, 1);
- 
+
 
 -- Dumping structure for table db_queue_pda.user_social_accounts
 DROP TABLE IF EXISTS `user_social_accounts`;

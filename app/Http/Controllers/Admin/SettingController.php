@@ -14,7 +14,7 @@ class SettingController extends Controller
     public function showForm()
     {
         $setting = Setting::first();
-        if (empty($setting)) 
+        if (empty($setting))
         {
             Setting::insert([
                 'title'       => 'Demo title',
@@ -27,9 +27,9 @@ class SettingController extends Controller
                 'copyright_text' => null,
                 'direction'   => 'LTR',
                 'language'    => 'en',
-                'timezone'    => 'Dhaka/Asia' 
+                'timezone'    => 'Dhaka/Asia'
             ]);
-        } 
+        }
 
         $timezoneList = $this->timezoneList();
 
@@ -37,10 +37,10 @@ class SettingController extends Controller
             'setting',
             'timezoneList'
         ));
-    } 
- 
+    }
+
     public function create(Request $request)
-    {  
+    {
         $validator = Validator::make($request->all(), [
             'id'          => 'required',
             'title'       => 'required|max:140',
@@ -52,7 +52,7 @@ class SettingController extends Controller
             'address'     => 'max:255',
             'copyright_text' => 'max:255',
             'lang'        => 'max:3',
-            'timezone'    => 'required|max:100' 
+            'timezone'    => 'required|max:100'
         ])
         ->setAttributeNames(array(
            'title' => trans('app.title'),
@@ -65,33 +65,33 @@ class SettingController extends Controller
            'copyright_text' => trans('app.copyright_text'),
            'lang' => trans('app.lang'),
            'timezone' => trans('app.timezone'),
-        )); 
+        ));
 
 
         if ($validator->fails()) {
             return redirect('admin/setting')
                         ->withErrors($validator)
                         ->withInput();
-        } 
-        else 
-        { 
+        }
+        else
+        {
             //Favicon
             if (!empty($request->favicon)) {
-                $faviconPath = 'public/assets/img/icons/favicon.jpg';
+                $faviconPath = 'assets/img/icons/favicon.jpg';
                 $favicon = $request->favicon;
                 Image::make($favicon)->resize(65, 50)->save($faviconPath);
             } else if (!empty($request->old_favicon)) {
                 $faviconPath = $request->old_favicon;
-            } 
+            }
 
             // Logo
             if (!empty($request->logo)) {
-                $logoPath = 'public/assets/img/icons/logo.jpg';
+                $logoPath = '/img/icons/logo.jpg';
                 $logo = $request->logo;
                 Image::make($logo)->resize(250, 50)->save($logoPath);
             } else if (!empty($request->old_logo)) {
                 $logoPath = $request->old_logo;
-            } 
+            }
 
             if (!empty($request->id)) {
                 //update data
@@ -105,33 +105,33 @@ class SettingController extends Controller
                         'email'       => $request->email,
                         'phone'       => $request->phone,
                         'address'     => $request->address,
-                        'copyright_text' => $request->copyright_text, 
-                        'language'    => $request->lang, 
-                        'timezone'    => $request->timezone 
+                        'copyright_text' => $request->copyright_text,
+                        'language'    => $request->lang,
+                        'timezone'    => $request->timezone
                     ]);
 
-                if ($update) 
+                if ($update)
                 {
-                    
+
                     $app = Setting::first();
                     \Session::put('locale', $request->lang);
                     \Session::put('app', array(
-                        'title'   => $app->title, 
-                        'favicon' => $app->favicon, 
-                        'logo'    => $app->logo, 
+                        'title'   => $app->title,
+                        'favicon' => $app->favicon,
+                        'logo'    => $app->logo,
                         'timezone' => $request->timezone,
-                        'copyright_text' => $app->copyright_text, 
+                        'copyright_text' => $app->copyright_text,
                     ));
 
                     return back()
                             ->with('message', trans('app.update_successfully'));
-                } 
-                else 
+                }
+                else
                 {
                     return back()
                             ->with('exception', trans('app.please_try_again'));
-                } 
-            } 
+                }
+            }
         }
     }
 
@@ -251,5 +251,5 @@ class SettingController extends Controller
             'Pacific/Auckland'     => "(GMT+12:00) Auckland",
             'Pacific/Fiji'         => "(GMT+12:00) Fiji",
         );
-    } 
+    }
 }

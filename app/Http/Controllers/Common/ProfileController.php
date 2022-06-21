@@ -11,15 +11,15 @@ use Validator, Hash, Image;
 
 class ProfileController extends Controller
 {
- 
+
     public function profile()
-    { 
+    {
         $user = User::select(
-                'user.*', 
+                'user.*',
                 'department.name as department'
             )->leftJoin('department', 'user.department_id', '=', 'department.id')
             ->where('user.id', auth()->user()->id)
-            ->first(); 
+            ->first();
 
         // assigned to me {as a officer}
         $assignedToMe = Token::where('user_id', auth()->user()->id)
@@ -37,30 +37,30 @@ class ProfileController extends Controller
         $myToken = Token::where('client_mobile', $user->mobile)
             ->selectRaw("COUNT(id) as total, status")
             ->groupBy('status')
-            ->pluck("total", "status"); 
+            ->pluck("total", "status");
 
-        return view('backend.common.setting.profile', compact(            
+        return view('backend.common.setting.profile', compact(
             'user',
             'assignedToMe',
             'generatedByMe',
             'myToken'
         ));
     }
- 
+
     public function profileEditShowForm()
-    { 
-        $user = User::where('id', auth()->user()->id )->first(); 
-        $departmentList = Department::where('status', 1)->pluck('name','id'); 
+    {
+        $user = User::where('id', auth()->user()->id )->first();
+        $departmentList = Department::where('status', 1)->pluck('name','id');
 
         return view('backend.common.setting.profile_edit',
             compact('departmentList','user'));
     }
 
     public function updateProfile(Request $request)
-    {  
+    {
         @date_default_timezone_set(session('app.timezone'));
 
-        $validator = Validator::make($request->all(), [ 
+        $validator = Validator::make($request->all(), [
             'email'       => 'required|max:50|unique:user,email,' . auth()->user()->id ,
             'firstname'   => 'required|max:25',
             'lastname'    => 'required|max:25',
@@ -78,28 +78,28 @@ class ProfileController extends Controller
            'conf_password' => trans('app.conf_password'),
            'department_id' => trans('app.department_id'),
            'mobile' => trans('app.mobile'),
-           'photo' => trans('app.photo') 
-        )); 
+           'photo' => trans('app.photo')
+        ));
 
         $filePath = null;
         if (!empty($request->photo)) {
-            $filePath = 'public/assets/img/users/'. date('ymdhis') .'.jpg';
+            $filePath = '/img/users/'. date('ymdhis') .'.jpg';
             $photo = $request->photo;
             Image::make($photo)->resize(300, 200)->save($filePath);
         } else if (!empty($request->old_photo)) {
             $filePath = $request->old_photo;
-        }  
- 
-        if ($validator->fails()) { 
+        }
+
+        if ($validator->fails()) {
             return redirect()
                 ->back()
                 ->withErrors($validator)
                 ->withInput()
                 ->with('photo', $filePath);
-        } else {  
+        } else {
 
             $update = User::where('id', auth()->user()->id )
-                ->update([  
+                ->update([
                     'firstname'   => $request->firstname,
                     'lastname'    => $request->lastname,
                     'email'       => $request->email,
@@ -109,10 +109,10 @@ class ProfileController extends Controller
                     'updated_at'  => date('Y-m-d'),
             ]);
 
-            if ($update) { 
+            if ($update) {
                 return redirect()
                     ->back()
-                    ->withInput()  
+                    ->withInput()
                     ->with('photo', $filePath)
                     ->with('message', trans('app.update_successfully'));
             } else {
